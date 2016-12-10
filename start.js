@@ -4,9 +4,10 @@
 var express = require('express');
 var favicon = require('serve-favicon');
 var request = require('request');
-//var https = require('https'); // FOR LOCAL SSL ONLY
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
+var colors = require('colors');
+//var https = require('https'); // FOR LOCAL SSL ONLY
 //var program = require('commander');
 
 var app = express();
@@ -15,16 +16,12 @@ app.set('json spaces', 2); // Set Express to pretty print json
 app.use(favicon(__dirname + '/public/favicon.ico'));
 var port = Number(process.env.PORT || 3000);
 
-
-var apiKey = require('./apiKey').getKey();
-var authURL = require('./authURL').getAuthURL();
-var originHeader = 'https://destiny-oauth.herokuapp.com/';
+var config = require('./config').getConfig();
+var apiKey = config.apiKey;
+var authURL = config.authURL;
+var originHeader = config.originHeader;
 var username, token, refreshToken;
 var authState = 'test';
-
-
-
-
 
 /******************** EXPRESS ROUTES ********************/
 
@@ -57,24 +54,6 @@ app.get('/auth', function (req, res) {
 	    code: req.query.code,
 	  }
 
-		/*request({
-			method: 'POST',
-			uri: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
-		  headers: {
-				'Host': 'www.bungie.net',
-				'Accept': 'application/json',
-				'Origin': req.protocol + '://' + req.headers.host,
-				'User-Agent': 'app-platform',
-				'Content-Length': post_data.toString().length,
-		    'X-API-Key': apiKey,
-	      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
-		  },
-			json: {
-				'code': 'b36868244121de60c25a49f0c8ca7de9'
-			},
-		}, onRequestResponse);*/
-
-		// generic function sending messages
 		//function sendMessage(recipientId, message) {
 		    request({
 		        url: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
@@ -90,7 +69,7 @@ app.get('/auth', function (req, res) {
 				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 					  },
 		        json: {
-		            code: req.query.code,
+		            code: post_data,
 		        }
 		    }, function(error, response, body) {
 		        if (error) {
@@ -103,21 +82,6 @@ app.get('/auth', function (req, res) {
 						}
 		    });
 		//};
-
-		/*function onRequestResponse(error, response, body) {
-		  var parsedResponse = JSON.parse(body);
-			console.log('parsedResponse:');
-			console.log(parsedResponse);
-			res.json(parsedResponse);
-		}*/
-
-	  //post_data = JSON.stringify(post_data);
-		//var baseURL = req.protocol + '://' + req.headers.host;
-		/*var genericMessage = {
-			name: 'Destiny oAuth - Authorization Redirect',
-			url: baseURL
-		}*/
-		//res.json(post_data);
 	}
 });
 
@@ -125,9 +89,10 @@ app.get('/auth', function (req, res) {
 
 // Server Listen
 app.listen(port, function () {
-	console.log('API Key: ' + apiKey);
-	console.log('Authorization URL: ' + authURL);
-	console.log('App server is running on http://localhost:' + port);
+	console.log('\nAPI Key: '.cyan + apiKey);
+	console.log('Authorization URL: '.cyan + authURL);
+	console.log('Origin Header: '.cyan + originHeader);
+	console.log('App server is running on ' + 'http://localhost:'.green + port.toString().green + '\n');
 });
 
 /*** FOR LOCAL SSL ONLY ***/
