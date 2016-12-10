@@ -42,13 +42,14 @@ app.get('/auth', function (req, res) {
 	console.log(req.query.code);
 
 	//https://destiny-oauth.herokuapp.com/auth?code=c0ccaa7563d07dd3caeedf76fa847dac&state=test
+	//93c9842bccf74b47cd0f3920641ba057
 	//var baseURL = req.protocol + '://' + req.headers.host;
 
   var post_data = {
-    'code': req.query.code,
+    code: req.query.code,
   }
 
-	request({
+	/*request({
 		method: 'POST',
 		uri: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
 	  headers: {
@@ -60,9 +61,7 @@ app.get('/auth', function (req, res) {
 	    'X-API-Key': apiKey,
       //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 	  },
-		json: {
-				code: req.query.code,
-		},
+		json: post_data,
 		postData: {
 			mimeType: 'application/x-www-form-urlencoded',
 			params: [
@@ -82,7 +81,7 @@ app.get('/auth', function (req, res) {
 	  var parsedResponse = JSON.parse(body);
 		console.log(parsedResponse);
 		res.json(parsedResponse);
-	}
+	}*/
 
   //post_data = JSON.stringify(post_data);
 	//var baseURL = req.protocol + '://' + req.headers.host;
@@ -90,7 +89,7 @@ app.get('/auth', function (req, res) {
 		name: 'Destiny oAuth - Authorization Redirect',
 		url: baseURL
 	}*/
-	//res.json(req.query);
+	res.json(post_data);
 });
 
 /******************************************************************************/
