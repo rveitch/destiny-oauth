@@ -8,16 +8,23 @@ var request = require('request');
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 //var program = require('commander');
-var apiKey = require('./apiKey').getKey();
-var authURL = require('./authURL').getAuthURL();
+
 var app = express();
 app.set('json spaces', 2); // Set Express to pretty print json
 //app.set('view engine', 'ejs'); // Set Express's view engine to EJS
 app.use(favicon(__dirname + '/public/favicon.ico'));
 var port = Number(process.env.PORT || 3000);
 
+
+var apiKey = require('./apiKey').getKey();
+var authURL = require('./authURL').getAuthURL();
+var originHeader = 'https://destiny-oauth.herokuapp.com/';
 var username, token, refreshToken;
 var authState = 'test';
+
+
+
+
 
 /******************** EXPRESS ROUTES ********************/
 
@@ -76,8 +83,7 @@ app.get('/auth', function (req, res) {
 						headers: {
 							'Host': 'www.bungie.net',
 							'Accept': 'application/json',
-							//'Origin': req.protocol + '://' + req.headers.host,
-							'Origin': 'https://destiny-oauth.herokuapp.com/',
+							'Origin': originHeader,
 							'User-Agent': 'app-platform',
 							'Content-Length': post_data.toString().length,
 					    'X-API-Key': apiKey,
