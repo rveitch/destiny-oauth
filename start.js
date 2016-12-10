@@ -53,6 +53,7 @@ app.get('/auth', function (req, res) {
 	  var post_data = {
 	    code: req.query.code,
 	  }
+		contentLength = post_data;
 		console.log(post_data);
 
 		//function sendMessage(recipientId, message) {
@@ -61,15 +62,15 @@ app.get('/auth', function (req, res) {
 		        method: 'POST',
 						headers: {
 							'Host': 'www.bungie.net',
-							'Accept': 'application/json',
+							//'Accept': 'application/json',
 							'Origin': originHeader,
-							'User-Agent': 'app-platform',
-							'Content-Length': post_data.toString().length,
+							//'User-Agent': 'app-platform',
+							//'Content-Length': contentLength.toString().length,
 					    'X-API-Key': apiKey,
-				      'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
+				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 					  },
-						body: JSON.stringify(post_data), //Set the body as a string
-						//json: { code: req.query.code },
+						//body: JSON.stringify(post_data), //Set the body as a string
+						json: { code: req.query.code },
 		    }, function(error, response, body) {
 		        if (error) {
 		            console.log('Error sending message: ', error);
