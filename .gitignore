@@ -4,6 +4,7 @@ misc-scripts
 manifest.zip
 *.content
 *.db
+*.pem
 
 # Logs
 logs

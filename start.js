@@ -76,7 +76,8 @@ app.get('/auth', function (req, res) {
 						headers: {
 							'Host': 'www.bungie.net',
 							'Accept': 'application/json',
-							'Origin': req.protocol + '://' + req.headers.host,
+							//'Origin': req.protocol + '://' + req.headers.host,
+							'Origin': 'https://destiny-oauth.herokuapp.com/',
 							'User-Agent': 'app-platform',
 							'Content-Length': post_data.toString().length,
 					    'X-API-Key': apiKey,
