@@ -9,13 +9,19 @@ var request = require('request');
 //var sqlite3 = require('sqlite3').verbose();
 //var program = require('commander');
 var apiKey = require('./apiKey').getKey();
-console.log('API Key: ' + apiKey);
+	console.log('API Key: ' + apiKey);
+var authURL = require('./authURL').getAuthURL();
+	console.log('Authorization URL: ' + authURL);
 
+//Using request with https
+//https://github.com/request/request/wiki/Using-request-with-https
 var app = express();
 var port = Number(process.env.PORT || 3000);
 
 app.set('json spaces', 2); // Set Express to pretty print json
 //app.set('view engine', 'ejs'); // Set Express's view engine to EJS
+
+var username, token, refreshToken;
 
 /******************** EXPRESS ROUTES ********************/
 
@@ -33,11 +39,56 @@ app.get('/', function (req, res) {
 app.get('/auth', function (req, res) {
 	console.log(req.query);
 	//var baseURL = req.protocol + '://' + req.headers.host;
+	//var url_parts = url.parse(req.url, true);
+  //var response = '';
+
+  /*var post_data = {
+    'code': url_parts.query.code,
+  }*/
+
+	request({
+		method: 'POST',
+		uri: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
+	  headers: {
+			'Host': 'www.bungie.net',
+			'Accept': 'application/json',
+			'Origin': req.protocol + '://' + req.headers.host,
+			'User-Agent': 'app-platform',
+			'Content-Length': post_data.toString().length,
+	    'X-API-Key': apiKey,
+      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
+	  },
+		json: {
+				code: url_parts.query.code,
+		},
+		postData: {
+			mimeType: 'application/x-www-form-urlencoded',
+			params: [
+				{
+					name: 'foo',
+					value: 'bar'
+				},
+				{
+					name: 'hello',
+					value: 'world'
+				}
+			]
+		}
+	}, onRequestResponse);
+
+	function onRequestResponse(error, response, body) {
+	  var parsedResponse = JSON.parse(body);
+		console.log(parsedResponse);
+		res.json(parsedResponse);
+	}
+
+  //post_data = JSON.stringify(post_data);
+	//var baseURL = req.protocol + '://' + req.headers.host;
 	/*var genericMessage = {
 		name: 'Destiny oAuth - Authorization Redirect',
 		url: baseURL
 	}*/
-	res.json(req.query);
+	//res.json(req.query);
 });
 
 /******************************************************************************/

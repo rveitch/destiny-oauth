@@ -1,5 +1,5 @@
 var colors = require('colors');
-var apikey = ''; // NOTE: <-- Add your Bungie API Key here.
+var apikey = '75a448e1993446649bd167734701b515'; // NOTE: <-- Add your Bungie API Key here.
 
 module.exports = {
   getKey: function() {
