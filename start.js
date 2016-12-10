@@ -50,11 +50,11 @@ app.get('/auth', function (req, res) {
 	if (req.query.code) {
 		console.log(req.query);
 
-	  var post_data = {
+	  var responseCode = {
 	    code: req.query.code,
 	  }
-		contentLength = post_data;
-		console.log(post_data);
+		contentLength = responseCode;
+		console.log(responseCode);
 
 		//function sendMessage(recipientId, message) {
 		    request({
