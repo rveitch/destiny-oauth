@@ -66,11 +66,10 @@ app.get('/auth', function (req, res) {
 							'User-Agent': 'app-platform',
 							'Content-Length': post_data.toString().length,
 					    'X-API-Key': apiKey,
-				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
+				      'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 					  },
-						json: {
-							code: req.query.code
-						},
+						body: JSON.stringify(post_data), //Set the body as a string
+						//json: { code: req.query.code },
 		    }, function(error, response, body) {
 		        if (error) {
 		            console.log('Error sending message: ', error);
