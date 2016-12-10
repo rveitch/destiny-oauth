@@ -2,6 +2,7 @@
 'use strict';
 
 var express = require('express');
+var favicon = require('serve-favicon');
 var request = require('request');
 //var https = require('https'); // FOR LOCAL SSL ONLY
 var fs = require('fs');
@@ -10,10 +11,10 @@ var sqlite3 = require('sqlite3').verbose();
 var apiKey = require('./apiKey').getKey();
 var authURL = require('./authURL').getAuthURL();
 var app = express();
-var port = Number(process.env.PORT || 3000);
-
 app.set('json spaces', 2); // Set Express to pretty print json
 //app.set('view engine', 'ejs'); // Set Express's view engine to EJS
+app.use(favicon(__dirname + '/public/favicon.ico'));
+var port = Number(process.env.PORT || 3000);
 
 var username, token, refreshToken;
 var authState = 'test';
@@ -42,73 +43,75 @@ app.get('/signin', function (req, res) {
 
 // Auth Redirect Endpoint
 app.get('/auth', function (req, res) {
-	console.log(req.query);
+	if (req.url != '/favicon.ico') {
+		console.log(req.query);
 
-  var post_data = {
-    code: req.query.code,
-  }
+	  var post_data = {
+	    code: req.query.code,
+	  }
 
-	/*request({
-		method: 'POST',
-		uri: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
-	  headers: {
-			'Host': 'www.bungie.net',
-			'Accept': 'application/json',
-			'Origin': req.protocol + '://' + req.headers.host,
-			'User-Agent': 'app-platform',
-			'Content-Length': post_data.toString().length,
-	    'X-API-Key': apiKey,
-      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
-	  },
-		json: {
-			'code': 'b36868244121de60c25a49f0c8ca7de9'
-		},
-	}, onRequestResponse);*/
+		/*request({
+			method: 'POST',
+			uri: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
+		  headers: {
+				'Host': 'www.bungie.net',
+				'Accept': 'application/json',
+				'Origin': req.protocol + '://' + req.headers.host,
+				'User-Agent': 'app-platform',
+				'Content-Length': post_data.toString().length,
+		    'X-API-Key': apiKey,
+	      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
+		  },
+			json: {
+				'code': 'b36868244121de60c25a49f0c8ca7de9'
+			},
+		}, onRequestResponse);*/
 
-	// generic function sending messages
-	//function sendMessage(recipientId, message) {
-	    request({
-	        url: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
-	        //qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-	        method: 'POST',
-					headers: {
-						'Host': 'www.bungie.net',
-						'Accept': 'application/json',
-						'Origin': req.protocol + '://' + req.headers.host,
-						'User-Agent': 'app-platform',
-						'Content-Length': post_data.toString().length,
-				    'X-API-Key': apiKey,
-			      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
-				  },
-	        json: {
-	            code: req.query.code,
-	        }
-	    }, function(error, response, body) {
-	        if (error) {
-	            console.log('Error sending message: ', error);
-	        } else if (response.body.error) {
-	            console.log('Error: ', response.body.error);
-	        } else {
-						console.log(response.body);
-						res.json(parsedResponse);
-					}
-	    });
-	//};
+		// generic function sending messages
+		//function sendMessage(recipientId, message) {
+		    request({
+		        url: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
+		        //qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+		        method: 'POST',
+						headers: {
+							'Host': 'www.bungie.net',
+							'Accept': 'application/json',
+							'Origin': req.protocol + '://' + req.headers.host,
+							'User-Agent': 'app-platform',
+							'Content-Length': post_data.toString().length,
+					    'X-API-Key': apiKey,
+				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
+					  },
+		        json: {
+		            code: req.query.code,
+		        }
+		    }, function(error, response, body) {
+		        if (error) {
+		            console.log('Error sending message: ', error);
+		        } else if (response.body.error) {
+		            console.log('Error: ', response.body.error);
+		        } else {
+							console.log(response.body);
+							res.json(parsedResponse);
+						}
+		    });
+		//};
 
-	/*function onRequestResponse(error, response, body) {
-	  var parsedResponse = JSON.parse(body);
-		console.log('parsedResponse:');
-		console.log(parsedResponse);
-		res.json(parsedResponse);
-	}*/
+		/*function onRequestResponse(error, response, body) {
+		  var parsedResponse = JSON.parse(body);
+			console.log('parsedResponse:');
+			console.log(parsedResponse);
+			res.json(parsedResponse);
+		}*/
 
-  //post_data = JSON.stringify(post_data);
-	//var baseURL = req.protocol + '://' + req.headers.host;
-	/*var genericMessage = {
-		name: 'Destiny oAuth - Authorization Redirect',
-		url: baseURL
-	}*/
-	//res.json(post_data);
+	  //post_data = JSON.stringify(post_data);
+		//var baseURL = req.protocol + '://' + req.headers.host;
+		/*var genericMessage = {
+			name: 'Destiny oAuth - Authorization Redirect',
+			url: baseURL
+		}*/
+		//res.json(post_data);
+	}
 });
 
 /******************************************************************************/
