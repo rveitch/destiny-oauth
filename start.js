@@ -71,9 +71,7 @@ app.get('/auth', function(req, res) {
     });
 
   } else {
-    res.json({
-      req.query
-    });
+    res.json(req.query);
   }
 });
 
