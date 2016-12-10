@@ -53,7 +53,7 @@ app.get('/auth', function (req, res) {
 	  var responseCode = {
 	    code: req.query.code,
 	  }
-		contentLength = responseCode;
+		//var contentLength = responseCode;
 		console.log(responseCode);
 
 		//function sendMessage(recipientId, message) {
