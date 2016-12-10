@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
 
 // Sign-In Endpoint
 app.get('/signin', function (req, res) {
-	res.redirect(302, 'https://www.bungie.net' + authURL + "?state="+ authState );
+	res.redirect(302, authURL + "?state="+ authState );
 });
 
 // Auth Redirect Endpoint
@@ -57,7 +57,6 @@ app.get('/auth', function (req, res) {
 		//function sendMessage(recipientId, message) {
 		    request({
 		        url: 'https://www.bungie.net/Platform/App/GetAccessTokensFromCode/',
-		        //qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
 		        method: 'POST',
 						headers: {
 							'Host': 'www.bungie.net',
