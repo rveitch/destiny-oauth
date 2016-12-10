@@ -68,9 +68,9 @@ app.get('/auth', function (req, res) {
 					    'X-API-Key': apiKey,
 				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 					  },
-		        json: {
+						json: {
 							code: req.query.code
-		        }
+						},
 		    }, function(error, response, body) {
 		        if (error) {
 		            console.log('Error sending message: ', error);
