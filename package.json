@@ -1,7 +1,7 @@
 {
   "name": "destiny-oath",
   "version": "0.0.1",
-  "description": "Node app for testing Bungie.net Destiny oAuth implementation.",
+  "description": "Node.js app for testing Bungie.net Destiny oAuth implementation.",
   "license": "GPL-3.0",
   "main": "start.js",
   "repository": {
