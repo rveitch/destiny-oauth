@@ -47,12 +47,13 @@ app.get('/signin', function (req, res) {
 
 // Auth Redirect Endpoint
 app.get('/auth', function (req, res) {
-	if (req.url != '/favicon.ico') {
+	if (req.query.code) {
 		console.log(req.query);
 
 	  var post_data = {
 	    code: req.query.code,
 	  }
+		console.log(post_data);
 
 		//function sendMessage(recipientId, message) {
 		    request({
@@ -68,7 +69,7 @@ app.get('/auth', function (req, res) {
 				      //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 					  },
 		        json: {
-		            code: post_data,
+							code: req.query.code
 		        }
 		    }, function(error, response, body) {
 		        if (error) {
@@ -81,6 +82,9 @@ app.get('/auth', function (req, res) {
 						}
 		    });
 		//};
+		//res.json(post_data);
+	} else {
+		res.json(req.query);
 	}
 });
 
