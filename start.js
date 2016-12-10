@@ -27,12 +27,13 @@ var username, token, refreshToken;
 
 // Default Endpoint
 app.get('/', function (req, res) {
-	var baseURL = req.protocol + '://' + req.headers.host;
+	/*var baseURL = req.protocol + '://' + req.headers.host;
 	var genericMessage = {
 		name: 'Destiny oAuth - Home',
 		url: baseURL,
-	}
-	res.json(genericMessage);
+	}*/
+	res.redirect(302, 'https://www.bungie.net' + authURL + "?state=test");
+	//res.json(genericMessage);
 });
 
 // Default Endpoint

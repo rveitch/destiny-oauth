@@ -1,5 +1,5 @@
 var colors = require('colors');
-var authURL = 'https://www.bungie.net/en/Application/Authorize/11057'; // NOTE: <-- Add your Authorization URL here.
+var authURL = '/en/Application/Authorize/11057'; // NOTE: <-- Add your Authorization URL here.
 
 module.exports = {
   getAuthURL: function() {
