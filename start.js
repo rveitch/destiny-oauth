@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var cookieParser = require('cookie-parser')
 var favicon = require('serve-favicon');
 var request = require('request');
 var sqlite3 = require('sqlite3').verbose();
@@ -8,6 +9,7 @@ var colors = require('colors');
 
 var app = express();
 app.set('json spaces', 2); // Set Express to pretty print json
+app.use(cookieParser());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 var port = Number(process.env.PORT || 3000);
 
