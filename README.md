@@ -1,4 +1,4 @@
-Destiny oAuth
+# Destiny oAuth
 
 ### FOR LOCAL SSL ONLY
 ```javascript
@@ -9,9 +9,6 @@ https.createServer({
   key: fs.readFileSync('ssl/key.pem'),
   cert: fs.readFileSync('ssl/cert.pem')
 }, app).listen(port, function() {
-  //db.serialize(function() {
-    //db.run("CREATE TABLE token (username TEXT, token TEXT, refreshToken TEXT)");
-  //});
 	console.log('App server is running on https://localhost:' + port);
 });
 ```
