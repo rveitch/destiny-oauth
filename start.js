@@ -92,7 +92,7 @@ app.get('/auth', function (req, res) {
 		            console.log('Error: ', response.body.error);
 		        } else {
 							console.log(response.body);
-							res.json(parsedResponse);
+							res.json(body);
 						}
 		    });
 		//};
