@@ -39,13 +39,14 @@ app.get('/', function (req, res) {
 // Default Endpoint
 app.get('/auth', function (req, res) {
 	console.log(req.query);
-	//var baseURL = req.protocol + '://' + req.headers.host;
-	//var url_parts = url.parse(req.url, true);
-  //var response = '';
+	console.log(req.query.code);
 
-  /*var post_data = {
-    'code': url_parts.query.code,
-  }*/
+	//https://destiny-oauth.herokuapp.com/auth?code=c0ccaa7563d07dd3caeedf76fa847dac&state=test
+	//var baseURL = req.protocol + '://' + req.headers.host;
+
+  var post_data = {
+    'code': req.query.code,
+  }
 
 	request({
 		method: 'POST',
@@ -60,7 +61,7 @@ app.get('/auth', function (req, res) {
       //'Content-Type': 'application/json; charset=UTF-8', // set by json parameter
 	  },
 		json: {
-				code: url_parts.query.code,
+				code: req.query.code,
 		},
 		postData: {
 			mimeType: 'application/x-www-form-urlencoded',
